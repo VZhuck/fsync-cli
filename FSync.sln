@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSyncCli", "FSyncCli\FSyncCli.csproj", "{56969385-972D-4897-80D4-EE06EB794DA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSyncCli", "FSyncCli\FSyncCli.csproj", "{56969385-972D-4897-80D4-EE06EB794DA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSyncCli.Tests", "FSyncCli.Tests\FSyncCli.Tests.csproj", "{3CCF1297-CCA4-4B52-ADEC-6377F982502F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{56969385-972D-4897-80D4-EE06EB794DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56969385-972D-4897-80D4-EE06EB794DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56969385-972D-4897-80D4-EE06EB794DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CCF1297-CCA4-4B52-ADEC-6377F982502F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CCF1297-CCA4-4B52-ADEC-6377F982502F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CCF1297-CCA4-4B52-ADEC-6377F982502F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CCF1297-CCA4-4B52-ADEC-6377F982502F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FSyncCli": {
+      "commandName": "Project",
+      "commandLineArgs": "--source-dir \"c:\\!FsyncTest\\source\" -t \"c:\\!FsyncTest\\target\""
+    }
+  }
+}
