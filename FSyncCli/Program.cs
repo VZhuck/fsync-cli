@@ -1,12 +1,7 @@
 ﻿using System;
-using System.CommandLine;
-using System.CommandLine.Invocation;
 using System.IO;
-using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -45,13 +40,14 @@ namespace FSyncCli
                     });
 
                     services.AddSingleton<IFSyncCmdArgs>(FSyncCmdArgs.CreateFSyncCmdArgs(args));
-                    services.AddHostedService<FSyncHost>();
+                    services.AddTransient<IFSyncCmdApp, FSyncCmdApp>();
+                    //services.AddSingleton<IHostLifetime, FSyncConsoleLifetime>();
 
                 });
-            
-            // await builder.UseConsoleLifetime().Build().RunAsync();
-            builder.RunConsoleAsync();
 
+            builder.Properties[typeof(FSyncCmdArgs)] = FSyncCmdArgs.CreateFSyncCmdArgs(args);
+
+            await builder.UseFSyncConsoleLifetime().Build().RunAsync();
         }
     }
 }

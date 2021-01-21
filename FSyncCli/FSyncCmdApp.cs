@@ -1,25 +1,20 @@
 ﻿using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
-using System.CommandLine.IO;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace FSyncCli
 {
-    public class FSyncHost : IHostedService
+    public class FSyncCmdApp : IFSyncCmdApp
     {
         private readonly string[] _args;
-        private ILogger<FSyncHost> _logger;
+        private ILogger<FSyncCmdApp> _logger;
         private readonly RootCommand _rootCommand;
-        private Task<int> _runningTask;
 
-        public FSyncHost(IFSyncCmdArgs fSyncCmdArgs, ILogger<FSyncHost> logger)
+        public FSyncCmdApp(IFSyncCmdArgs fSyncCmdArgs, ILogger<FSyncCmdApp> logger)
         {
             _logger = logger;
             _args = fSyncCmdArgs.Args;
@@ -44,8 +39,6 @@ namespace FSyncCli
             _rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>(
                 (sourceDir, targetDir) =>
             {
-                
-
                 Console.WriteLine($"source folder is: {sourceDir}");
                 Console.WriteLine($"target folder is: {targetDir}");
                 Thread.Sleep(3000);
@@ -54,29 +47,11 @@ namespace FSyncCli
 
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public Task<int> RunAsync(CancellationToken cancellationToken)
         {
-            _runningTask = Task
-                .Run(async () =>
-                {
-                    await Task.Delay(3000, cancellationToken);
-                    return await _rootCommand.InvokeAsync(_args);
-                });
+            _logger.LogInformation($"Running {nameof(FSyncCmdApp)}... ");
 
-            return _runningTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return Task.CompletedTask;
-            }
-            else
-            {
-                return _runningTask;
-            }
-            //_runningTask
+            return  _rootCommand.InvokeAsync(_args);
         }
     }
 }
