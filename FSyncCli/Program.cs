@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using FSyncCli.Core;
+using FSyncCli.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,7 +43,9 @@ namespace FSyncCli
 
                     services.AddSingleton<IFSyncCmdArgs>(FSyncCmdArgs.CreateFSyncCmdArgs(args));
                     services.AddTransient<IFSyncCmdApp, FSyncCmdApp>();
-                    //services.AddSingleton<IHostLifetime, FSyncConsoleLifetime>();
+                    services.AddTransient<IFSyncPipeline, FSyncPipeline>();
+                    services.AddTransient<ISourceDirService, SourceDirService>();
+                    services.AddTransient<IPipelineBuilder, PipelineBuilder>();
 
                 });
 

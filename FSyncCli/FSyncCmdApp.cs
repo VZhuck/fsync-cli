@@ -4,6 +4,7 @@ using System.CommandLine.Invocation;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using FSyncCli.Core;
 using Microsoft.Extensions.Logging;
 
 namespace FSyncCli
@@ -13,11 +14,13 @@ namespace FSyncCli
         private readonly string[] _args;
         private ILogger<FSyncCmdApp> _logger;
         private readonly RootCommand _rootCommand;
+        private readonly IPipelineBuilder _pipelineBuilder;
 
-        public FSyncCmdApp(IFSyncCmdArgs fSyncCmdArgs, ILogger<FSyncCmdApp> logger)
+        public FSyncCmdApp(IFSyncCmdArgs fSyncCmdArgs, ILogger<FSyncCmdApp> logger, IPipelineBuilder pipelineBuilder)
         {
             _logger = logger;
             _args = fSyncCmdArgs.Args;
+            _pipelineBuilder = pipelineBuilder;
 
             // Create a root command with some options
             _rootCommand = new RootCommand
@@ -33,16 +36,24 @@ namespace FSyncCli
                      description: "when 'true' run simulation (no changes are made)")
              };
 
-            _rootCommand.Description = "fSync-cli is a small tool, which is targeted to analyze source folder to and copy/sync all its files with target folder, excluding all duplicates. ";
+            _rootCommand.Description = "fSync-cli is a small tool, which is targeted to analyze source folder to and copy/sync all its files with target folder, excluding all duplicates.";
 
             // Note that the parameters of the handler method are matched according to the names of the options
             _rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>(
-                (sourceDir, targetDir) =>
+                async (sourceDir, targetDir) =>
             {
-                Console.WriteLine($"source folder is: {sourceDir}");
-                Console.WriteLine($"target folder is: {targetDir}");
-                Thread.Sleep(3000);
-                Console.WriteLine($"After 3 sec .....");
+                _logger.LogInformation($"source folder is: {sourceDir}");
+                _logger.LogInformation($"target folder is: {targetDir}");
+
+
+                var pipeline = _pipelineBuilder
+                    .WithSourceDirs(new[] {sourceDir})
+                    .WithTargetDir(targetDir)
+                    .CreateDefaultPipeline()
+                    .Build();
+                
+                //await _fSyncPipeline.RunFSyncForInAndOutSources(new[] { sourceDir }, targetDir);
+                await pipeline();
             });
 
         }
@@ -51,7 +62,7 @@ namespace FSyncCli
         {
             _logger.LogInformation($"Running {nameof(FSyncCmdApp)}... ");
 
-            return  _rootCommand.InvokeAsync(_args);
+            return _rootCommand.InvokeAsync(_args);
         }
     }
 }
