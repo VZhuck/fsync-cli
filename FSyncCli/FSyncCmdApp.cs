@@ -12,7 +12,7 @@ namespace FSyncCli
     public class FSyncCmdApp : IFSyncCmdApp
     {
         private readonly string[] _args;
-        private ILogger<FSyncCmdApp> _logger;
+        private readonly ILogger<FSyncCmdApp> _logger;
         private readonly RootCommand _rootCommand;
         private readonly IPipelineBuilder _pipelineBuilder;
 
@@ -52,8 +52,8 @@ namespace FSyncCli
                     .CreateDefaultPipeline()
                     .Build();
                 
-                //await _fSyncPipeline.RunFSyncForInAndOutSources(new[] { sourceDir }, targetDir);
-                await pipeline();
+                
+                await pipeline.StartPipeline();
             });
 
         }

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using FSyncCli.Core.Dataflow;
 using FSyncCli.Domain;
-using FSyncCli.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace FSyncCli.Core
@@ -13,83 +13,100 @@ namespace FSyncCli.Core
     {
         // Services
         private readonly ILogger<PipelineBuilder> _logger;
-        private readonly ISourceDirService _sourceDirService;
+        private readonly IServiceScope _scope;
 
-        private List<DirectoryInfo> _sourceDirs= new List<DirectoryInfo>();
-        private DirectoryInfo _targetDir;
+        // State
+        private readonly IPipelineContext _context;
 
-        private IPropagatorBlock<DirectoryInfo, FileMetadataInfo> _pipeline;
+        //Config Actions
+        private Action<IPipelineContext> _configPipelineContext;
+        private Func<IPropagatorBlock<DirectoryInfo, FileMetadataInfo>> _pipelineConfigAction;
 
-        public PipelineBuilder(ILogger<PipelineBuilder> logger, ISourceDirService sourceDirService)
+        public PipelineBuilder(ILogger<PipelineBuilder> logger, IServiceProvider serviceProvider)
         {
             _logger = logger;
-            _sourceDirService = sourceDirService;
+            _scope = serviceProvider.CreateScope();
+
+            _context = _scope.ServiceProvider.GetRequiredService<IPipelineContext>();
         }
 
         public PipelineBuilder WithSourceDirs(IEnumerable<DirectoryInfo> sourceDirs)
         {
-            _sourceDirs.AddRange(sourceDirs ?? throw new ArgumentNullException(nameof(sourceDirs)));
-            
+            var configContextDelegate = new Action<IPipelineContext>((context) =>
+            {
+                context.SourceDirs.AddRange(sourceDirs ?? throw new ArgumentNullException(nameof(sourceDirs)));
+            });
+
+            _configPipelineContext += configContextDelegate;
+
             return this;
         }
 
         public PipelineBuilder WithTargetDir(DirectoryInfo targetDir)
         {
-            if (_targetDir != null)
+            var configContextDelegate = new Action<IPipelineContext>((context) =>
             {
-                throw new InvalidOperationException($"{nameof(targetDir)} has been already defined. System can have only 1 target.");
-            }
+                context.TargetDir = targetDir ?? throw new ArgumentNullException(nameof(targetDir));
+            });
 
-            _targetDir = targetDir ?? throw new ArgumentNullException(nameof(targetDir));
+            _configPipelineContext += configContextDelegate;
 
             return this;
         }
 
         public IPipelineBuilder CreateDefaultPipeline()
         {
-            var linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
+            _pipelineConfigAction = () =>
+                {
 
-            var folderToFilesBlock = new TransformManyBlock<DirectoryInfo, FileMetadataInfo>(_sourceDirService.GetSourcesFiles);
+                    var linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
 
-            var calculateFileHashBlock = new TransformBlock<FileMetadataInfo, FileMetadataInfo>(_sourceDirService.GetFileDescriptorWithCalculatedHash);
+                    var folderToFilesBlock = GetRequiredService<EnumerateSourceFilesTransformToManyBlock>();
 
-            var copyFileToTarget = new ActionBlock<FileMetadataInfo>(info =>
-            {
-                var destFilePath = Path.Combine(_targetDir.FullName, info.Name);
-                File.Copy(info.FullPath, destFilePath);
+                    var calculateFileHashBlock = GetRequiredService<CalculateFileHashTransformBlock>();
 
-                _logger.LogInformation($"File {info.FullPath} has been copied to: {destFilePath}");
-            });
+                    var copyFileToTarget = GetRequiredService<CopyFileBlock>();
 
-            //var loggingBlock = new ActionBlock<FileMetadataInfo>(info =>
-            //    _logger.LogInformation($"File {info.Name} has been processed. Hash: {info.Hash}")
-            //);
+                    //var loggingBlock = new ActionBlock<FileMetadataInfo>(info =>
+                    //    _logger.LogInformation($"File {info.Name} has been processed. Hash: {info.Hash}")
+                    //);
 
-            folderToFilesBlock.LinkTo(calculateFileHashBlock, linkOptions);
-            calculateFileHashBlock.LinkTo(copyFileToTarget, linkOptions);
-            //copyFileToTarget.LinkTo(loggingBlock, linkOptions);
+                    folderToFilesBlock.Block.LinkTo(calculateFileHashBlock.Block, linkOptions);
+                    calculateFileHashBlock.Block.LinkTo(copyFileToTarget.Block, linkOptions);
+                    //copyFileToTarget.LinkTo(loggingBlock, linkOptions);
 
-            _pipeline = folderToFilesBlock;
+                    return folderToFilesBlock.Block;
+                };
 
             return this;
         }
-        
 
-        public Func<Task> Build()
+        public IFSyncPipeline Build()
         {
-            var runPipelineAction = new Func<Task>(() =>
-            {
-                foreach (var directoryInfo in _sourceDirs)
-                {
-                    _pipeline.Post<DirectoryInfo>(directoryInfo);
-                }
+            _logger.LogTrace($"Configuring {nameof(IPipelineContext)}...");
+            _configPipelineContext?.Invoke(_context);
+            _logger.LogTrace($"{nameof(IPipelineContext)} has been configured");
 
-                _pipeline.Complete();
+            _logger.LogTrace($"Creating dataflow network...");
+            var dataflowPipeline = _pipelineConfigAction();
+            _logger.LogTrace($"Dataflow network has been created");
 
-                return _pipeline.Completion;
-            });
+            _logger.LogTrace($"Creating {nameof(FSyncPipeline)}...");
+            var fSyncPipelineLogger = _scope.ServiceProvider.GetRequiredService<ILogger<FSyncPipeline>>();
 
-            return runPipelineAction;
+            var pipeline = new FSyncPipeline(_scope, dataflowPipeline, _context, fSyncPipelineLogger);
+            _logger.LogTrace($"{nameof(FSyncPipeline)} is ready to use");
+
+            return pipeline;
         }
+
+        #region Helpers
+
+        private T GetRequiredService<T>()
+        {
+            return _scope.ServiceProvider.GetRequiredService<T>();
+        }
+
+        #endregion
     }
 }

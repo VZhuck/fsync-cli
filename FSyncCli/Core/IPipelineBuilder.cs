@@ -13,6 +13,6 @@ namespace FSyncCli.Core
 
         IPipelineBuilder CreateDefaultPipeline();
 
-        Func<Task> Build();
+        IFSyncPipeline Build();
     }
 }

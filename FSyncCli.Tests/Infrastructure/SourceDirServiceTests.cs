@@ -54,21 +54,6 @@ namespace FSyncCli.Tests.Infrastructure
             Assert.Equal(expected.Count, result.Length);
         }
 
-        [Fact]
-        public void GetFileDescriptorWithCalculatedHash_ValidateHash()
-        {
-            //arrange
-            var fileDescriptor = _sourceDirInfo.CreateTestFile("Test File Content").ToFileMetadataInfo();
-            var sut = new SourceDirService();
-            var expected = Guid.Parse("33d0e86568a7b2122b75c20e2fe4061c");
-
-            //act
-            var result = sut.GetFileDescriptorWithCalculatedHash(fileDescriptor);
-            
-            //assert    
-            Assert.Equal(expected, result.Hash);
-        }
-
         public void Dispose()
         {
             _inputDir1NestedDir.DeleteTmpTestDirWithAllFiles();

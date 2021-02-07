@@ -6,7 +6,7 @@ namespace FSyncCli.Infrastructure
 {
     public interface ISourceDirService
     {
-        FileMetadataInfo GetFileDescriptorWithCalculatedHash(FileMetadataInfo fileDescriptor);
+        Stream GetFilesContentAsStream(FileMetadataInfo fileDescriptor);
 
         IEnumerable<FileMetadataInfo> GetSourcesFiles(DirectoryInfo directoryInfo);
     }

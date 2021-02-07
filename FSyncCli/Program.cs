@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using FSyncCli.Core;
+using FSyncCli.Core.Dataflow;
 using FSyncCli.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +47,12 @@ namespace FSyncCli
                     services.AddTransient<IFSyncPipeline, FSyncPipeline>();
                     services.AddTransient<ISourceDirService, SourceDirService>();
                     services.AddTransient<IPipelineBuilder, PipelineBuilder>();
+                    services.AddScoped<IPipelineContext, PipelineContext>();
 
+                    // DataFlow Blocks
+                    services.AddScoped<EnumerateSourceFilesTransformToManyBlock>();
+                    services.AddScoped<CalculateFileHashTransformBlock>();
+                    services.AddScoped<CopyFileBlock>();
                 });
 
             builder.Properties[typeof(FSyncCmdArgs)] = FSyncCmdArgs.CreateFSyncCmdArgs(args);
