@@ -9,20 +9,20 @@ namespace FSyncCli.Core.Dataflow
 {
     public class CalculateFileHashTransformBlock
     {
-        private readonly ISourceDirService _sourceDirService;
+        private readonly IFileRepoService _sourceFileRepoService;
 
         public IPropagatorBlock<FileMetadataInfo, FileMetadataInfo> Block { get; }
 
-        public CalculateFileHashTransformBlock( ISourceDirService sourceDirService)
+        public CalculateFileHashTransformBlock(IFileRepoService sourceFileRepoService)
         {
-            _sourceDirService = sourceDirService;
+            _sourceFileRepoService = sourceFileRepoService;
 
             Block = new TransformBlock<FileMetadataInfo, FileMetadataInfo>(CalculateAndTransform);
         }
 
         private FileMetadataInfo CalculateAndTransform(FileMetadataInfo fileDescriptor)
         {
-            using var fileStream = _sourceDirService.GetFilesContentAsStream(fileDescriptor);
+            using var fileStream = _sourceFileRepoService.GetFilesContentAsStream(fileDescriptor);
             fileDescriptor.Hash = CalculateFileHash(fileStream);
 
             return fileDescriptor;

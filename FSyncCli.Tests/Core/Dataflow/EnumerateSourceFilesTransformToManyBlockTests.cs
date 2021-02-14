@@ -10,11 +10,11 @@ namespace FSyncCli.Tests.Core.Dataflow
 {
     public class EnumerateSourceFilesTransformToManyBlockTests
     {
-        private readonly Mock<ISourceDirService> _sourceDirServiceMock;
+        private readonly Mock<IFileRepoService> _sourceDirServiceMock;
 
         public EnumerateSourceFilesTransformToManyBlockTests()
         {
-            _sourceDirServiceMock = new Mock<ISourceDirService>();
+            _sourceDirServiceMock = new Mock<IFileRepoService>();
         }
 
         [Fact]
@@ -22,8 +22,9 @@ namespace FSyncCli.Tests.Core.Dataflow
         {
             //arrange
             var files = new[] { new FileMetadataInfo("Path1"), new FileMetadataInfo("Path2") };
+            
             _sourceDirServiceMock
-                .Setup(sourceSrv => sourceSrv.GetSourcesFiles(
+                .Setup(sourceSrv => sourceSrv.GetFileMetadataInfos(
                     It.Is<DirectoryInfo>(dir => dir.Name == "TestDir_01")))
                 .Returns(files);
 
@@ -39,8 +40,8 @@ namespace FSyncCli.Tests.Core.Dataflow
             var secondFile = sut.Block.Receive();
 
             //assert
-            Assert.Equal("Path1", firstFile.Name);
-            Assert.Equal("Path2", secondFile.Name);
+            Assert.Equal("Path1", firstFile.FullPath);
+            Assert.Equal("Path2", secondFile.FullPath);
         }
     }
 }

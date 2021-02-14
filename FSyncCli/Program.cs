@@ -45,13 +45,14 @@ namespace FSyncCli
                     services.AddSingleton<IFSyncCmdArgs>(FSyncCmdArgs.CreateFSyncCmdArgs(args));
                     services.AddTransient<IFSyncCmdApp, FSyncCmdApp>();
                     services.AddTransient<IFSyncPipeline, FSyncPipeline>();
-                    services.AddTransient<ISourceDirService, SourceDirService>();
+                    services.AddTransient<IFileRepoService, LocalFileRepoService>();
                     services.AddTransient<IPipelineBuilder, PipelineBuilder>();
                     services.AddScoped<IPipelineContext, PipelineContext>();
 
                     // DataFlow Blocks
                     services.AddScoped<EnumerateSourceFilesTransformToManyBlock>();
                     services.AddScoped<CalculateFileHashTransformBlock>();
+                    services.AddScoped<FilterFileIfExistsBlock>();
                     services.AddScoped<CopyFileBlock>();
                 });
 

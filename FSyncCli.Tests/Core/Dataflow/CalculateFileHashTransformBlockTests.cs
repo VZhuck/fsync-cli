@@ -12,12 +12,12 @@ namespace FSyncCli.Tests.Core.Dataflow
 {
     public class CalculateFileHashTransformBlockTests: IDisposable
     {
-        private readonly Mock<ISourceDirService> _sourceDirServiceMock;
+        private readonly Mock<IFileRepoService> _sourceDirServiceMock;
         private readonly Stream _testStream;
 
         public CalculateFileHashTransformBlockTests()
         {
-            _sourceDirServiceMock = new Mock<ISourceDirService>();
+            _sourceDirServiceMock = new Mock<IFileRepoService>();
 
             // convert string to stream
             byte[] byteArray = Encoding.ASCII.GetBytes("Test File Content");

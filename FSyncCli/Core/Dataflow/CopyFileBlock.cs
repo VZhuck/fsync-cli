@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks.Dataflow;
 using FSyncCli.Domain;
+using FSyncCli.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace FSyncCli.Core.Dataflow
 {
@@ -8,16 +11,24 @@ namespace FSyncCli.Core.Dataflow
     {
         public ITargetBlock<FileMetadataInfo> Block { get; }
 
-        public CopyFileBlock(IPipelineContext context)
+        public CopyFileBlock(IPipelineContext context, IFileRepoService fileRepo)
         {
-            Block = new ActionBlock<FileMetadataInfo>(info =>
+            Block = new ActionBlock<FileMetadataInfo>(fileDescriptor =>
             {
-                var destFilePath = Path.Combine(context.TargetDir.FullName, info.Name);
-                File.Copy(info.FullPath, destFilePath);
+                var destFilePath = Path.Combine(context.TargetDir.FullName, fileDescriptor.Name);
 
-                // _logger.LogInformation($"File {info.FullPath} has been copied to: {destFilePath}");
+                if (fileRepo.FileExists(destFilePath))
+                {
+                    // Log Warning
+                    var origExt = fileDescriptor.Ext;
+                    var newExt = $"{fileDescriptor.Hash.ToString("N")[^12..]}{origExt}";
+
+                    destFilePath = Path.ChangeExtension(destFilePath, newExt);
+                }
+
+                // TODO: Error Handling
+                fileRepo.CopyFileAsync(fileDescriptor.FullPath, destFilePath);
             });
-
         }
     }
 }

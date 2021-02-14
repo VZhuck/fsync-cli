@@ -64,17 +64,16 @@ namespace FSyncCli.Core
                     var folderToFilesBlock = GetRequiredService<EnumerateSourceFilesTransformToManyBlock>();
 
                     var calculateFileHashBlock = GetRequiredService<CalculateFileHashTransformBlock>();
+                    
+                    var filterFileByHashBlock = GetRequiredService<FilterFileIfExistsBlock>();
 
                     var copyFileToTarget = GetRequiredService<CopyFileBlock>();
 
-                    //var loggingBlock = new ActionBlock<FileMetadataInfo>(info =>
-                    //    _logger.LogInformation($"File {info.Name} has been processed. Hash: {info.Hash}")
-                    //);
-
+                    
                     folderToFilesBlock.Block.LinkTo(calculateFileHashBlock.Block, linkOptions);
-                    calculateFileHashBlock.Block.LinkTo(copyFileToTarget.Block, linkOptions);
-                    //copyFileToTarget.LinkTo(loggingBlock, linkOptions);
-
+                    calculateFileHashBlock.Block.LinkTo(filterFileByHashBlock.Block, linkOptions);
+                    filterFileByHashBlock.Block.LinkTo(copyFileToTarget.Block, linkOptions);
+                    
                     return folderToFilesBlock.Block;
                 };
 

@@ -28,10 +28,10 @@ namespace FSyncCli.Tests.Infrastructure
             var expected = new List<FileInfo>();
             expected.AddRange(_sourceDirInfo.CreateMultipleTestFiles(3));
 
-            var sut = new SourceDirService();
+            var sut = new LocalFileRepoService();
             
             //act
-            var result = sut.GetSourcesFiles(_sourceDirInfo).ToArray();
+            var result = sut.GetFileMetadataInfos(_sourceDirInfo).ToArray();
 
             //assert
             Assert.Equal(expected.Count, result.Length);
@@ -45,10 +45,10 @@ namespace FSyncCli.Tests.Infrastructure
             expected.AddRange(_sourceDirInfo.CreateMultipleTestFiles(3));
             expected.AddRange(_inputDir1NestedDir.CreateMultipleTestFiles(2));
 
-            var sut = new SourceDirService();
+            var sut = new LocalFileRepoService();
 
             //act
-            var result = sut.GetSourcesFiles(_sourceDirInfo).ToArray();
+            var result = sut.GetFileMetadataInfos(_sourceDirInfo).ToArray();
 
             //assert
             Assert.Equal(expected.Count, result.Length);

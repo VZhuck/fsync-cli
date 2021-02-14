@@ -9,9 +9,9 @@ namespace FSyncCli.Core.Dataflow
     {
         public IPropagatorBlock<DirectoryInfo, FileMetadataInfo> Block { get; }
 
-        public EnumerateSourceFilesTransformToManyBlock (ISourceDirService sourceDirService)
+        public EnumerateSourceFilesTransformToManyBlock (IFileRepoService sourceFileRepoService)
         {
-            Block = new TransformManyBlock<DirectoryInfo, FileMetadataInfo>(sourceDirService.GetSourcesFiles);
+            Block = new TransformManyBlock<DirectoryInfo, FileMetadataInfo>(sourceFileRepoService.GetFileMetadataInfos);
         }
     }
 }

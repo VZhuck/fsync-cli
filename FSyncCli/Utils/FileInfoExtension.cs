@@ -7,7 +7,16 @@ namespace FSyncCli.Utils
     {
         public static FileMetadataInfo ToFileMetadataInfo(this FileInfo fileInfo)
         {
-            return new FileMetadataInfo(fileInfo.FullName);
+            var fileMetadataInfo = new FileMetadataInfo
+            {
+                FullPath = fileInfo.FullName,
+                Name = fileInfo.Name,
+                Ext = fileInfo.Extension,
+                CreationTimeUtc = fileInfo.CreationTimeUtc,
+                CreationTime = fileInfo.CreationTime
+            };
+
+            return fileMetadataInfo;
         }
     }
 }
