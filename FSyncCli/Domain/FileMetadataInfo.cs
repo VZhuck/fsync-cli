@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 
 namespace FSyncCli.Domain
@@ -10,9 +9,12 @@ namespace FSyncCli.Domain
         {
         }
 
+        // TODO: Used be tests. Consider to move/remove
         public FileMetadataInfo(string fullPath)
         {
             FullPath = fullPath;
+            Name = Path.GetFileName(fullPath);
+            Ext = Path.GetExtension(fullPath);
         }
 
         public string FullPath { get; set; }
@@ -25,9 +27,5 @@ namespace FSyncCli.Domain
 
         public DateTime CreationTimeUtc { get; set; }
 
-        public Guid Hash { get; set; }
-
-        //TODO: Data Flow Model Candidate
-        public bool IsDuplicate { get; set; }
     }
 }

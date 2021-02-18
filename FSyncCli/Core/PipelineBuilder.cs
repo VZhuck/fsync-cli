@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using FSyncCli.Core.Dataflow;
-using FSyncCli.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +20,7 @@ namespace FSyncCli.Core
 
         //Config Actions
         private Action<IPipelineContext> _configPipelineContext;
-        private Func<IPropagatorBlock<DirectoryInfo, FileMetadataInfo>> _pipelineConfigAction;
+        private Func<Tuple<ITargetBlock<DirectoryInfo>, IDataflowBlock>> _pipelineConfigAction;
 
         public PipelineBuilder(ILogger<PipelineBuilder> logger, IServiceProvider serviceProvider)
         {
@@ -64,17 +64,18 @@ namespace FSyncCli.Core
                     var folderToFilesBlock = GetRequiredService<EnumerateSourceFilesTransformToManyBlock>();
 
                     var calculateFileHashBlock = GetRequiredService<CalculateFileHashTransformBlock>();
-                    
+
                     var filterFileByHashBlock = GetRequiredService<FilterFileIfExistsBlock>();
 
                     var copyFileToTarget = GetRequiredService<CopyFileBlock>();
 
-                    
+
                     folderToFilesBlock.Block.LinkTo(calculateFileHashBlock.Block, linkOptions);
                     calculateFileHashBlock.Block.LinkTo(filterFileByHashBlock.Block, linkOptions);
                     filterFileByHashBlock.Block.LinkTo(copyFileToTarget.Block, linkOptions);
-                    
-                    return folderToFilesBlock.Block;
+
+                    return new Tuple<ITargetBlock<DirectoryInfo>, IDataflowBlock>(
+                        folderToFilesBlock.Block, copyFileToTarget.Block);
                 };
 
             return this;
@@ -93,13 +94,17 @@ namespace FSyncCli.Core
             _logger.LogTrace($"Creating {nameof(FSyncPipeline)}...");
             var fSyncPipelineLogger = _scope.ServiceProvider.GetRequiredService<ILogger<FSyncPipeline>>();
 
-            var pipeline = new FSyncPipeline(_scope, dataflowPipeline, _context, fSyncPipelineLogger);
+            var pipeline = new FSyncPipeline(
+                _scope, _context, dataflowPipeline.Item1, dataflowPipeline.Item2.Completion, fSyncPipelineLogger);
             _logger.LogTrace($"{nameof(FSyncPipeline)} is ready to use");
-
+            
             return pipeline;
         }
 
         #region Helpers
+
+        
+
 
         private T GetRequiredService<T>()
         {

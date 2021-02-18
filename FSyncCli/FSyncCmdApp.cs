@@ -47,13 +47,25 @@ namespace FSyncCli
 
 
                 var pipeline = _pipelineBuilder
-                    .WithSourceDirs(new[] {sourceDir})
+                    .WithSourceDirs(new[] { sourceDir })
                     .WithTargetDir(targetDir)
                     .CreateDefaultPipeline()
                     .Build();
-                
-                
-                await pipeline.StartPipeline();
+
+                try
+                {
+                    await pipeline.StartPipeline();
+                }
+                catch (AggregateException e)
+                {
+                    _logger.LogError(e.Flatten().ToString());
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e.ToString());
+                    throw;
+                }
             });
 
         }

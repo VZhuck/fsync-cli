@@ -2,7 +2,6 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks.Dataflow;
-using FSyncCli.Domain;
 using FSyncCli.Infrastructure;
 
 namespace FSyncCli.Core.Dataflow
@@ -11,21 +10,21 @@ namespace FSyncCli.Core.Dataflow
     {
         private readonly IFileRepoService _sourceFileRepoService;
 
-        public IPropagatorBlock<FileMetadataInfo, FileMetadataInfo> Block { get; }
+        public IPropagatorBlock<PipelineItem, PipelineItem> Block { get; }
 
         public CalculateFileHashTransformBlock(IFileRepoService sourceFileRepoService)
         {
             _sourceFileRepoService = sourceFileRepoService;
 
-            Block = new TransformBlock<FileMetadataInfo, FileMetadataInfo>(CalculateAndTransform);
+            Block = new TransformBlock<PipelineItem, PipelineItem>(CalculateAndTransform);
         }
 
-        private FileMetadataInfo CalculateAndTransform(FileMetadataInfo fileDescriptor)
+        private PipelineItem CalculateAndTransform(PipelineItem pipelineItem)
         {
-            using var fileStream = _sourceFileRepoService.GetFilesContentAsStream(fileDescriptor);
-            fileDescriptor.Hash = CalculateFileHash(fileStream);
+            using var fileStream = _sourceFileRepoService.GetFilesContentAsStream(pipelineItem.Item);
+            pipelineItem.Hash = CalculateFileHash(fileStream);
 
-            return fileDescriptor;
+            return pipelineItem;
         }
 
         private Guid CalculateFileHash(Stream stream)

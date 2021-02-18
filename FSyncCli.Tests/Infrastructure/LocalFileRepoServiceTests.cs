@@ -9,12 +9,12 @@ using Xunit;
 
 namespace FSyncCli.Tests.Infrastructure
 {
-    public class SourceDirServiceTests : IDisposable
+    public class LocalFileRepoServiceTests : IDisposable
     {
         private readonly DirectoryInfo _sourceDirInfo;
         private readonly DirectoryInfo _inputDir1NestedDir;
 
-        public SourceDirServiceTests()
+        public LocalFileRepoServiceTests()
         {
             var tmpTestRootDirPath = Path.GetTempPath();
             _sourceDirInfo = SystemFileUtils.CreateTmpTestDir(tmpTestRootDirPath, "fSyncIn_");

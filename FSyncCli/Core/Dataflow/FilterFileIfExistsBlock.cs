@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Threading.Tasks.Dataflow;
 using FSyncCli.Domain;
@@ -15,15 +14,15 @@ namespace FSyncCli.Core.Dataflow
         // State
         private readonly ConcurrentDictionary<Guid, FileMetadataInfo> _existingFiles = new ConcurrentDictionary<Guid, FileMetadataInfo>();
 
-        public IPropagatorBlock<FileMetadataInfo, FileMetadataInfo> Block { get; }
+        public IPropagatorBlock<PipelineItem, PipelineItem> Block { get; }
 
         public FilterFileIfExistsBlock(ILogger<FilterFileIfExistsBlock> logger)
         {
             _logger = logger;
 
-            Block = new TransformBlock<FileMetadataInfo, FileMetadataInfo>(CheckIfFileAlreadyExistsTransform);
+            Block = new TransformBlock<PipelineItem, PipelineItem>(CheckIfFileAlreadyExistsTransform);
 
-            var skippedLogging = new ActionBlock<FileMetadataInfo>(LogFilteredFiles);
+            var skippedLogging = new ActionBlock<PipelineItem>(LogFilteredFiles);
 
             Block.LinkTo(skippedLogging,
                 new DataflowLinkOptions { PropagateCompletion = true },
@@ -31,24 +30,24 @@ namespace FSyncCli.Core.Dataflow
 
         }
 
-        private FileMetadataInfo CheckIfFileAlreadyExistsTransform(FileMetadataInfo fileDescriptor)
+        private PipelineItem CheckIfFileAlreadyExistsTransform(PipelineItem pipelineItem)
         {
-            var isNewKey = _existingFiles.TryAdd(fileDescriptor.Hash, fileDescriptor);
+            var isNewKey = _existingFiles.TryAdd(pipelineItem.Hash, pipelineItem.Item);
 
             if (!isNewKey)
             {
-                fileDescriptor.IsDuplicate = true;
+                pipelineItem.IsDuplicate = true;
             }
 
-            return fileDescriptor;
+            return pipelineItem;
         }
 
-        private void LogFilteredFiles(FileMetadataInfo skippedFileDescriptor)
+        private void LogFilteredFiles(PipelineItem skippedFileDescriptor)
         {
             var fileWhichExists = _existingFiles[skippedFileDescriptor.Hash];
 
             _logger.LogWarning(
-                $"File {skippedFileDescriptor.FullPath} has been identified as duplicate of  {fileWhichExists?.FullPath}");
+                $"File {skippedFileDescriptor.Item.FullPath} has been identified as duplicate of  {fileWhichExists?.FullPath}");
         }
     }
 }

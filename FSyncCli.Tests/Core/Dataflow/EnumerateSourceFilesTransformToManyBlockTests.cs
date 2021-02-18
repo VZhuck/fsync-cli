@@ -40,8 +40,8 @@ namespace FSyncCli.Tests.Core.Dataflow
             var secondFile = sut.Block.Receive();
 
             //assert
-            Assert.Equal("Path1", firstFile.FullPath);
-            Assert.Equal("Path2", secondFile.FullPath);
+            Assert.Equal("Path1", firstFile.Item.FullPath);
+            Assert.Equal("Path2", secondFile.Item.FullPath);
         }
     }
 }

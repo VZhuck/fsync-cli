@@ -5,6 +5,7 @@ using System.Threading.Tasks.Dataflow;
 using FSyncCli.Core.Dataflow;
 using FSyncCli.Domain;
 using FSyncCli.Infrastructure;
+using FSyncCli.Utils;
 using Moq;
 using Xunit;
 
@@ -39,7 +40,7 @@ namespace FSyncCli.Tests.Core.Dataflow
 
             //act
             sut.Block
-                .Post(new FileMetadataInfo("fakeFilePath"));
+                .Post(new FileMetadataInfo("fakeFilePath").AsPipelineItem());
             
             sut.Block.Complete();
 

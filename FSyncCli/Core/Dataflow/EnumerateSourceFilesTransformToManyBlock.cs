@@ -1,17 +1,30 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using FSyncCli.Domain;
 using FSyncCli.Infrastructure;
+using FSyncCli.Utils;
 
 namespace FSyncCli.Core.Dataflow
 {
     public class EnumerateSourceFilesTransformToManyBlock
     {
-        public IPropagatorBlock<DirectoryInfo, FileMetadataInfo> Block { get; }
+        private readonly IFileRepoService _sourceFileRepoService;
 
-        public EnumerateSourceFilesTransformToManyBlock (IFileRepoService sourceFileRepoService)
+        public IPropagatorBlock<DirectoryInfo, PipelineItem> Block { get; }
+
+        public EnumerateSourceFilesTransformToManyBlock(IFileRepoService sourceFileRepoService)
         {
-            Block = new TransformManyBlock<DirectoryInfo, FileMetadataInfo>(sourceFileRepoService.GetFileMetadataInfos);
+            _sourceFileRepoService = sourceFileRepoService;
+
+            Block = new TransformManyBlock<DirectoryInfo, PipelineItem>(Transform);
+        }
+
+        private IEnumerable<PipelineItem> Transform(DirectoryInfo directoryInfo)
+        {
+            return _sourceFileRepoService
+                .GetFileMetadataInfos(directoryInfo)
+                .Select(fileMetadataInfo => fileMetadataInfo.AsPipelineItem());
         }
     }
 }

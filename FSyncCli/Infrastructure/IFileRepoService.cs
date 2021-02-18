@@ -14,7 +14,8 @@ namespace FSyncCli.Infrastructure
         bool FileExists(string fullPath);
 
         Stream GetFilesContentAsStream(FileMetadataInfo fileDescriptor);
-        
-        Task CopyFileAsync(string sourceFile, string destinationFile);
+
+        Task<FileMetadataInfo> CreateNewWithContent(string newFilePath, Stream contentStream);
+
     }
 }
