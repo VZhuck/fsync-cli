@@ -21,7 +21,8 @@ namespace FSyncCli.Core.Dataflow
 
         private PipelineItem CalculateAndTransform(PipelineItem pipelineItem)
         {
-            using var fileStream = _sourceFileRepoService.GetFilesContentAsStream(pipelineItem.Item);
+            using var fileStream = _sourceFileRepoService
+                .GetFilesContentAsStream(pipelineItem.FileMetadataInfo);
             pipelineItem.Hash = CalculateFileHash(fileStream);
 
             return pipelineItem;

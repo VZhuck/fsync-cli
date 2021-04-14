@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using FSyncCli.Core;
 using FSyncCli.Core.Dataflow;
+using FSyncCli.Core.Metadata;
 using FSyncCli.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,11 +49,14 @@ namespace FSyncCli
                     services.AddTransient<IFileRepoService, LocalFileRepoService>();
                     services.AddTransient<IPipelineBuilder, PipelineBuilder>();
                     services.AddScoped<IPipelineContext, PipelineContext>();
+                    services.AddScoped<IImageMetadataProviderService, ImageMetadataProviderService>();
+                    services.AddScoped<IFilePathMetadataExtractService, FilePathMetadataExtractService>();
 
                     // DataFlow Blocks
                     services.AddScoped<EnumerateSourceFilesTransformToManyBlock>();
                     services.AddScoped<CalculateFileHashTransformBlock>();
                     services.AddScoped<FilterFileIfExistsBlock>();
+                    services.AddScoped<EnrichMetadataTransformBlock>();
                     services.AddScoped<CopyFileBlock>();
                 });
 

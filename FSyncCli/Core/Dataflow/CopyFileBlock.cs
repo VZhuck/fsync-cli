@@ -13,18 +13,18 @@ namespace FSyncCli.Core.Dataflow
         {
             Block = new ActionBlock<PipelineItem>(async pipelineItem =>
             {
-                var destFilePath = Path.Combine(context.TargetDir.FullName, pipelineItem.Item.Name);
+                var destFilePath = Path.Combine(context.TargetDir.FullName, pipelineItem.FileMetadataInfo.Name);
 
                 if (fileRepo.FileExists(destFilePath))
                 {
                     // Log Warning
-                    var origExt = pipelineItem.Item.Ext;
+                    var origExt = pipelineItem.FileMetadataInfo.Ext;
                     var newExt = $"{pipelineItem.Hash.ToString("N")[^12..]}{origExt}";
 
                     destFilePath = Path.ChangeExtension(destFilePath, newExt);
                 }
 
-                await using var sourceStream = fileRepo.GetFilesContentAsStream(pipelineItem.Item);
+                await using var sourceStream = fileRepo.GetFilesContentAsStream(pipelineItem.FileMetadataInfo);
                 await fileRepo.CreateNewWithContent(destFilePath, sourceStream);
             });
         }

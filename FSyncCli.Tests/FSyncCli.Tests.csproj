@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestFiles\TestJpgWithMetadata.JPG" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles\TestJpgWithMetadata.JPG" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
     <PackageReference Include="Moq" Version="4.16.0" />
@@ -23,6 +31,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FSyncCli\FSyncCli.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Metadata\" />
   </ItemGroup>
 
 </Project>

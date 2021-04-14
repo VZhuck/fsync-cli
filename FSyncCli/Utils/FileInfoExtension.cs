@@ -12,8 +12,8 @@ namespace FSyncCli.Utils
                 FullPath = fileInfo.FullName,
                 Name = fileInfo.Name,
                 Ext = fileInfo.Extension,
-                CreationTimeUtc = fileInfo.CreationTimeUtc,
-                CreationTime = fileInfo.CreationTime
+                LastWriteTimeUtc = fileInfo.LastWriteTimeUtc,
+                LastWriteTime = fileInfo.LastWriteTime
             };
 
             return fileMetadataInfo;

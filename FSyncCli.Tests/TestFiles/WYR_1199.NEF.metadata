@@ -1,0 +1,315 @@
+[ExifTool]      ExifToolVersion                 : 12.22
+[File]          FileName                        : WYR_1199.NEF
+[File]          Directory                       : c:/!FsyncTest
+[File]          FileSize                        : 27 MiB
+[File]          FileModifyDate                  : 2021:03:16 15:11:08-04:00
+[File]          FileAccessDate                  : 2021:03:22 23:44:55-04:00
+[File]          FileCreateDate                  : 2021:03:16 15:11:08-04:00
+[File]          FilePermissions                 : -rw-rw-rw-
+[File]          FileType                        : NEF
+[File]          FileTypeExtension               : nef
+[File]          MIMEType                        : image/x-nikon-nef
+[File]          ExifByteOrder                   : Little-endian (Intel, II)
+[EXIF]          Make                            : NIKON CORPORATION
+[EXIF]          Model                           : NIKON Z 6_2
+[EXIF]          Orientation                     : Horizontal (normal)
+[EXIF]          Software                        : Ver.01.01
+[EXIF]          ModifyDate                      : 2021:03:16 15:11:06
+[EXIF]          Artist                          : 
+[EXIF]          JpgFromRawStart                 : 832512
+[EXIF]          JpgFromRawLength                : 1298440
+[EXIF]          YCbCrPositioning                : Co-sited
+[EXIF]          ImageWidth                      : 6064
+[EXIF]          ImageHeight                     : 4040
+[EXIF]          BitsPerSample                   : 14
+[EXIF]          Compression                     : Nikon NEF Compressed
+[EXIF]          PhotometricInterpretation       : Color Filter Array
+[EXIF]          StripOffsets                    : 2131456
+[EXIF]          SamplesPerPixel                 : 1
+[EXIF]          RowsPerStrip                    : 4040
+[EXIF]          StripByteCounts                 : 26108831
+[EXIF]          XResolution                     : 300
+[EXIF]          YResolution                     : 300
+[EXIF]          PlanarConfiguration             : Chunky
+[EXIF]          ResolutionUnit                  : inches
+[EXIF]          CFARepeatPatternDim             : 2 2
+[EXIF]          CFAPattern2                     : 0 1 1 2
+[EXIF]          SubfileType                     : Reduced-resolution image
+[EXIF]          OtherImageStart                 : 231936
+[EXIF]          OtherImageLength                : 600229
+[EXIF]          ReferenceBlackWhite             : 0 255 0 255 0 255
+[EXIF]          Copyright                       : 
+[EXIF]          ExposureTime                    : 1/50
+[EXIF]          FNumber                         : 8.0
+[EXIF]          ExposureProgram                 : Aperture-priority AE
+[EXIF]          ISO                             : 640
+[EXIF]          SensitivityType                 : Recommended Exposure Index
+[EXIF]          RecommendedExposureIndex        : 640
+[EXIF]          CreateDate                      : 2021:03:16 15:11:06
+[EXIF]          OffsetTime                      : -04:00
+[EXIF]          OffsetTimeOriginal              : -04:00
+[EXIF]          OffsetTimeDigitized             : -04:00
+[EXIF]          ExposureCompensation            : 0
+[EXIF]          MeteringMode                    : Center-weighted average
+[EXIF]          LightSource                     : Unknown
+[EXIF]          Flash                           : No Flash
+[EXIF]          FocalLength                     : 70.0 mm
+[EXIF]          UserComment                     : 
+[EXIF]          SubSecTime                      : 53
+[EXIF]          SubSecTimeOriginal              : 53
+[EXIF]          SubSecTimeDigitized             : 53
+[EXIF]          SensingMethod                   : One-chip color area
+[EXIF]          FileSource                      : Digital Camera
+[EXIF]          SceneType                       : Directly photographed
+[EXIF]          CustomRendered                  : Custom
+[EXIF]          ExposureMode                    : Auto
+[EXIF]          FocalLengthIn35mmFormat         : 70 mm
+[EXIF]          SceneCaptureType                : Standard
+[EXIF]          GainControl                     : None
+[EXIF]          Contrast                        : Normal
+[EXIF]          Saturation                      : Normal
+[EXIF]          Sharpness                       : Normal
+[EXIF]          SubjectDistanceRange            : Unknown
+[EXIF]          SerialNumber                    : 3006852
+[EXIF]          LensInfo                        : 24-70mm f/4
+[EXIF]          LensMake                        : NIKON
+[EXIF]          LensModel                       : NIKKOR Z 24-70mm f/4 S
+[EXIF]          LensSerialNumber                : 20217129
+[EXIF]          GPSVersionID                    : 2.3.0.0
+[EXIF]          DateTimeOriginal                : 2021:03:16 15:11:06
+[EXIF]          TIFF-EPStandardID               : 1 0 0 0
+[EXIF]          JpgFromRaw                      : (Binary data 1298440 bytes, use -b option to extract)
+[EXIF]          OtherImage                      : (Binary data 600229 bytes, use -b option to extract)
+[EXIF]          ThumbnailTIFF                   : (Binary data 57816 bytes, use -b option to extract)
+[XMP]           CreatorTool                     : NIKON Z 6_2 Ver.01.01
+[XMP]           Rating                          : 0
+[XMP]           Exposure2012                    : 0.00
+[XMP]           Highlights2012                  : 0
+[XMP]           Shadows2012                     : 0
+[XMP]           LuminanceSmoothing              : 33
+[XMP]           LuminanceNoiseReductionDetail   : 75
+[XMP]           LuminanceNoiseReductionContrast : 0
+[XMP]           ColorNoiseReduction             : 10
+[XMP]           ColorNoiseReductionDetail       : 50
+[XMP]           ColorNoiseReductionSmoothness   : 50
+[XMP]           SharpenRadius                   : 2.00
+[XMP]           SharpenDetail                   : 25
+[XMP]           SharpenEdgeMasking              : 0
+[XMP]           Contrast2012                    : 0
+[XMP]           CameraProfile                   : Camera Standard
+[MakerNotes]    MakerNoteVersion                : 2.11
+[MakerNotes]    Quality                         : RAW
+[MakerNotes]    WhiteBalance                    : Auto1
+[MakerNotes]    FocusMode                       : AF-S
+[MakerNotes]    FlashSetting                    : Normal
+[MakerNotes]    FlashType                       : 
+[MakerNotes]    WhiteBalanceFineTune            : 0 0
+[MakerNotes]    WB_RBLevels                     : 1.78125 1.2734375 1 1
+[MakerNotes]    ProgramShift                    : 0
+[MakerNotes]    ExposureDifference              : 0
+[MakerNotes]    PreviewImageStart               : 96884
+[MakerNotes]    PreviewImageLength              : 76404
+[MakerNotes]    ExternalFlashExposureComp       : 0
+[MakerNotes]    FlashExposureBracketValue       : 0.0
+[MakerNotes]    ExposureBracketValue            : 0
+[MakerNotes]    CropHiSpeed                     : FX Uncropped (6064x4040 cropped to 6064x4040 at pixel 0,0)
+[MakerNotes]    ExposureTuning                  : 0
+[MakerNotes]    ColorSpace                      : sRGB
+[MakerNotes]    VRInfoVersion                   : 0200
+[MakerNotes]    VibrationReduction              : On
+[MakerNotes]    VRMode                          : On (1)
+[MakerNotes]    ActiveD-Lighting                : Off
+[MakerNotes]    PictureControlVersion           : 0300
+[MakerNotes]    PictureControlName              : Standard
+[MakerNotes]    PictureControlBase              : Standard
+[MakerNotes]    PictureControlAdjust            : Quick Adjust
+[MakerNotes]    PictureControlQuickAdjust       : n/a
+[MakerNotes]    MidRangeSharpness               : 2.00
+[MakerNotes]    Clarity                         : 1.00
+[MakerNotes]    Brightness                      : Normal
+[MakerNotes]    Hue                             : None
+[MakerNotes]    FilterEffect                    : n/a
+[MakerNotes]    ToningEffect                    : n/a
+[MakerNotes]    ToningSaturation                : n/a
+[MakerNotes]    TimeZone                        : -05:00
+[MakerNotes]    DaylightSavings                 : Yes
+[MakerNotes]    DateDisplayFormat               : Y/M/D
+[MakerNotes]    ISOExpansion                    : Off
+[MakerNotes]    ISO2                            : 635
+[MakerNotes]    ISOExpansion2                   : Off
+[MakerNotes]    VignetteControl                 : Normal
+[MakerNotes]    AutoDistortionControl           : On
+[MakerNotes]    ShutterMode                     : Auto (Electronic Front Curtain)
+[MakerNotes]    MechanicalShutterCount          : 1177
+[MakerNotes]    BlackLevel                      : 1008 1008 1008 1008
+[MakerNotes]    ImageSizeRAW                    : Large
+[MakerNotes]    CropArea                        : 8 8 6048 4024
+[MakerNotes]    PrimarySlot                     : SD Card
+[MakerNotes]    SecondarySlotFunction           : Overflow
+[MakerNotes]    ISOAutoHiLimit                  : Unknown (37)
+[MakerNotes]    ISOAutoFlashLimit               : Same As Without Flash
+[MakerNotes]    ISOAutoShutterTime              : 1/100 s
+[MakerNotes]    FlickerReductionShooting        : Disable
+[MakerNotes]    BracketSet                      : AE/Flash
+[MakerNotes]    BracketProgram                  : Disabled
+[MakerNotes]    SilentPhotography               : Off
+[MakerNotes]    MovieISOAutoHiLimit             : Unknown (33)
+[MakerNotes]    MovieISOAutoControlManualMode   : On
+[MakerNotes]    AF-CPrioritySel                 : Release
+[MakerNotes]    AF-SPrioritySel                 : Focus
+[MakerNotes]    BlockShotAFResponse             : 3 (Normal)
+[MakerNotes]    AFPointSel                      : Use All
+[MakerNotes]    StoreByOrientation              : Off
+[MakerNotes]    AFActivation                    : Shutter/AF-On
+[MakerNotes]    FocusPointWrap                  : No Wrap
+[MakerNotes]    ManualFocusPointIllumination    : On
+[MakerNotes]    DynamicAreaAFAssist             : On
+[MakerNotes]    LowLightAF                      : Off
+[MakerNotes]    AF-AssistIlluminator            : On
+[MakerNotes]    ExposureControlStepSize         : 1/3 EV
+[MakerNotes]    EasyExposureCompensation        : Off
+[MakerNotes]    CenterWeightedAreaSize          : 12 mm
+[MakerNotes]    FineTuneOptMatrixMetering       : 0
+[MakerNotes]    FineTuneOptCenterWeighted       : 0
+[MakerNotes]    FineTuneOptSpotMetering         : 0
+[MakerNotes]    FineTuneOptHighlightWeighted    : 0
+[MakerNotes]    ShutterReleaseButtonAE-L        : Off
+[MakerNotes]    SelfTimerTime                   : 10 s
+[MakerNotes]    SelfTimerShotCount              : 1
+[MakerNotes]    SelfTimerShotInterval           : 0.5 s
+[MakerNotes]    PlaybackMonitorOffTime          : 10 s
+[MakerNotes]    MenuMonitorOffTime              : 1 min
+[MakerNotes]    ImageReviewMonitorOffTime       : 4 s
+[MakerNotes]    StandbyMonitorOffTime           : 30 s
+[MakerNotes]    CLModeShootingSpeed             : 3 fps
+[MakerNotes]    MaxContinuousRelease            : 200
+[MakerNotes]    SyncReleaseMode                 : Sync
+[MakerNotes]    ExposureDelayMode               : Off
+[MakerNotes]    ShutterType                     : Auto
+[MakerNotes]    ExtendedShutterSpeeds           : Off
+[MakerNotes]    FileNumberSequence              : On
+[MakerNotes]    ApplySettingsToLiveView         : On
+[MakerNotes]    FramingGridDisplay              : Off
+[MakerNotes]    FocusPeakingLevel               : Off
+[MakerNotes]    FocusPeakingHighlightColor      : Red
+[MakerNotes]    ContinuousModeDisplay           : On
+[MakerNotes]    FlashSyncSpeed                  : 1/200 s
+[MakerNotes]    FlashShutterSpeed               : 1/60 s
+[MakerNotes]    FlashExposureCompArea           : Entire Frame
+[MakerNotes]    AutoFlashISOSensitivity         : Subject and Background
+[MakerNotes]    ModelingFlash                   : On
+[MakerNotes]    AutoBracketModeM                : Flash/Speed
+[MakerNotes]    Func1Button                     : Subject Tracking
+[MakerNotes]    Func2Button                     : Focus Mode
+[MakerNotes]    AF-OnButton                     : AF-On
+[MakerNotes]    SubSelector                     : Focus Point Selection
+[MakerNotes]    SubSelectorCenter               : AE/AF Lock
+[MakerNotes]    AssignMovieRecordButton         : LiveView Info Display On/Off
+[MakerNotes]    LensFunc1Button                 : AE/AF Lock
+[MakerNotes]    LensFunc2Button                 : AF-On
+[MakerNotes]    LensControlRing                 : Focus (M/A)
+[MakerNotes]    MultiSelectorShootMode          : Select Center Focus Point
+[MakerNotes]    MultiSelectorPlaybackMode       : Zoom (Low)
+[MakerNotes]    ShutterSpeedLock                : Off
+[MakerNotes]    ApertureLock                    : Off
+[MakerNotes]    CmdDialsReverseRotation         : Exposure Compensation
+[MakerNotes]    CmdDialsChangeMainSub           : Autofocus Off, Exposure Off
+[MakerNotes]    CmdDialsMenuAndPlayback         : Off
+[MakerNotes]    SubDialFrameAdvance             : 10 Frames
+[MakerNotes]    ReleaseButtonToUseDial          : No
+[MakerNotes]    ReverseIndicators               : - 0 +
+[MakerNotes]    ReverseFocusRing                : Not Reversed
+[MakerNotes]    VerticalFuncButton              : AE Lock (reset on release)
+[MakerNotes]    VerticalAFOnButton              : Same as AF-On Button
+[MakerNotes]    VerticalMultiSelector           : Same as MultiSelector
+[MakerNotes]    MovieFunc1Button                : White Balance
+[MakerNotes]    MovieFunc2Button                : Focus Mode
+[MakerNotes]    MovieAF-OnButton                : AF-On
+[MakerNotes]    AssignMovieSubselector          : AE/AF Lock
+[MakerNotes]    MovieShutterButton              : Take Photo
+[MakerNotes]    MovieMultiSelector              : Center Focus Point
+[MakerNotes]    MovieAFSpeed                    : 0
+[MakerNotes]    MovieAFSpeedApply               : Always
+[MakerNotes]    MovieAFTrackingSensitivity      : 4 (Normal)
+[MakerNotes]    MovieHighlightDisplayPattern    : Off
+[MakerNotes]    MovieHighlightDisplayThreshold  : 248
+[MakerNotes]    VerticalMovieFuncButton         : None
+[MakerNotes]    VerticalMovieAFOnButton         : Same as AF-On
+[MakerNotes]    Language                        : English
+[MakerNotes]    ShootingInfoDisplay             : Manual (dark on light)
+[MakerNotes]    FlickAdvanceDirection           : Left to Right
+[MakerNotes]    RemoteFuncButton                : None
+[MakerNotes]    USBPowerDelivery                : Enable
+[MakerNotes]    ColorTemperatureAuto            : 5560
+[MakerNotes]    LensType                        : AF
+[MakerNotes]    Lens                            : 24-70mm f/4
+[MakerNotes]    FlashMode                       : Did Not Fire
+[MakerNotes]    ShootingMode                    : Single-Frame
+[MakerNotes]    LensFStops                      : 5.00
+[MakerNotes]    ContrastCurve                   : (Binary data 578 bytes, use -b option to extract)
+[MakerNotes]    ShotInfoVersion                 : 0803
+[MakerNotes]    FirmwareVersion                 : 01.01.00
+[MakerNotes]    FirmwareVersion2                : 01.00.e0
+[MakerNotes]    FirmwareVersion3                : 01.00.00
+[MakerNotes]    NumberOffsets                   : 32
+[MakerNotes]    RollAngle                       : -1.4
+[MakerNotes]    PitchAngle                      : -3.3
+[MakerNotes]    YawAngle                        : -167.6
+[MakerNotes]    NEFCompression                  : Lossless
+[MakerNotes]    NoiseReduction                  : Off
+[MakerNotes]    NEFLinearizationTable           : (Binary data 46 bytes, use -b option to extract)
+[MakerNotes]    ColorBalanceVersion             : 0802
+[MakerNotes]    LensDataVersion                 : 0801
+[MakerNotes]    MaxAperture                     : 4.0
+[MakerNotes]    FocusDistance                   : 1.68 m
+[MakerNotes]    RawImageCenter                  : 3032 2020
+[MakerNotes]    RetouchHistory                  : None
+[MakerNotes]    ShutterCount                    : 1198
+[MakerNotes]    FlashInfoVersion                : 0300
+[MakerNotes]    FlashSource                     : None
+[MakerNotes]    ExternalFlashFirmware           : n/a
+[MakerNotes]    FlashCompensation               : 0
+[MakerNotes]    VariProgram                     : 
+[MakerNotes]    HighISONoiseReduction           : Normal
+[MakerNotes]    PowerUpTime                     : 2021:03:08 12:15:04
+[MakerNotes]    AFInfo2Version                  : 0301
+[MakerNotes]    ContrastDetectAF                : On (2)
+[MakerNotes]    AFAreaMode                      : Auto
+[MakerNotes]    PhaseDetectAF                   : On (81-point)
+[MakerNotes]    PrimaryAFPoint                  : (none)
+[MakerNotes]    AFPointsUsed                    : D4,E4,F4,G2,G3
+[MakerNotes]    AFAreaXPosition                 : 0
+[MakerNotes]    AFFocusPointXPosition           : 16L of Center
+[MakerNotes]    AFAreaYPosition                 : 0
+[MakerNotes]    AFFocusPointYPosition           : 10U from Center
+[MakerNotes]    FileInfoVersion                 : 0100
+[MakerNotes]    MemoryCardNumber                : 1
+[MakerNotes]    DirectoryNumber                 : 110
+[MakerNotes]    FileNumber                      : 1199
+[MakerNotes]    AFFineTune                      : Off
+[MakerNotes]    AFFineTuneIndex                 : n/a
+[MakerNotes]    AFFineTuneAdj                   : 0
+[MakerNotes]    AFFineTuneAdjTele               : 0
+[MakerNotes]    RetouchInfoVersion              : 0200
+[MakerNotes]    RetouchNEFProcessing            : Off
+[MakerNotes]    PreviewImage                    : (Binary data 76404 bytes, use -b option to extract)
+[Composite]     Aperture                        : 8.0
+[Composite]     BlueBalance                     : 1.273438
+[Composite]     CFAPattern                      : [Red,Green][Green,Blue]
+[Composite]     ImageSize                       : 6064x4040
+[Composite]     Megapixels                      : 24.5
+[Composite]     RedBalance                      : 1.78125
+[Composite]     ScaleFactor35efl                : 1.0
+[Composite]     ShutterSpeed                    : 1/50
+[Composite]     SubSecCreateDate                : 2021:03:16 15:11:06.53-04:00
+[Composite]     SubSecDateTimeOriginal          : 2021:03:16 15:11:06.53-04:00
+[Composite]     SubSecModifyDate                : 2021:03:16 15:11:06.53-04:00
+[Composite]     AutoFocus                       : On
+[Composite]     LensSpec                        : 24-70mm f/4 AF
+[Composite]     CircleOfConfusion               : 0.030 mm
+[Composite]     DOF                             : 0.27 m (1.56 - 1.82 m)
+[Composite]     FOV                             : 27.7 deg (0.83 m)
+[Composite]     FocalLength35efl                : 70.0 mm (35 mm equivalent: 70.0 mm)
+[Composite]     HyperfocalDistance              : 20.39 m
+[Composite]     LensID                          : NIKKOR Z 24-70mm f/4 S
+[Composite]     LightValue                      : 9.0

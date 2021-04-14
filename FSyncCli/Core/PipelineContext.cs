@@ -4,13 +4,6 @@ using System.IO;
 
 namespace FSyncCli.Core
 {
-    public interface IPipelineContext
-    {
-        List<DirectoryInfo> SourceDirs { get; }
-        DirectoryInfo TargetDir { get; set; }
-        bool DryRun { get; }
-    }
-
     public class PipelineContext : IPipelineContext
     {
         private DirectoryInfo _targetDir;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using FSyncCli.Core.Dataflow;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,6 +63,8 @@ namespace FSyncCli.Core
                     var folderToFilesBlock = GetRequiredService<EnumerateSourceFilesTransformToManyBlock>();
 
                     var calculateFileHashBlock = GetRequiredService<CalculateFileHashTransformBlock>();
+                    
+                    var enrichMetadataTransformBlock = GetRequiredService<EnrichMetadataTransformBlock>();
 
                     var filterFileByHashBlock = GetRequiredService<FilterFileIfExistsBlock>();
 
@@ -72,7 +73,8 @@ namespace FSyncCli.Core
 
                     folderToFilesBlock.Block.LinkTo(calculateFileHashBlock.Block, linkOptions);
                     calculateFileHashBlock.Block.LinkTo(filterFileByHashBlock.Block, linkOptions);
-                    filterFileByHashBlock.Block.LinkTo(copyFileToTarget.Block, linkOptions);
+                    filterFileByHashBlock.Block.LinkTo(enrichMetadataTransformBlock.Block, linkOptions);
+                    enrichMetadataTransformBlock.Block.LinkTo(copyFileToTarget.Block, linkOptions);
 
                     return new Tuple<ITargetBlock<DirectoryInfo>, IDataflowBlock>(
                         folderToFilesBlock.Block, copyFileToTarget.Block);
@@ -102,10 +104,7 @@ namespace FSyncCli.Core
         }
 
         #region Helpers
-
         
-
-
         private T GetRequiredService<T>()
         {
             return _scope.ServiceProvider.GetRequiredService<T>();

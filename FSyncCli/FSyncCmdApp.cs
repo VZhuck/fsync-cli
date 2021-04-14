@@ -38,6 +38,8 @@ namespace FSyncCli
 
             _rootCommand.Description = "fSync-cli is a small tool, which is targeted to analyze source folder to and copy/sync all its files with target folder, excluding all duplicates.";
 
+            
+
             // Note that the parameters of the handler method are matched according to the names of the options
             _rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>(
                 async (sourceDir, targetDir) =>

@@ -3,24 +3,33 @@ using FSyncCli.Domain;
 
 namespace FSyncCli.Core
 {
-    public class PipelineItem : PipelineItem<FileMetadataInfo>
+    public class PipelineItem : PipelineItemBase
     {
-        public PipelineItem(FileMetadataInfo item) : base(item)
+        public PipelineItem(FileMetadataInfo fileMetadataInfo)
         {
+            FileMetadataInfo = fileMetadataInfo;
         }
 
         public Guid Hash { get; set; }
 
         public bool IsDuplicate { get; set; }
-    }
 
-
-    public class PipelineItem<T> where T : class
-    {
-        public PipelineItem(T item)
+        public FileMetadataInfo FileMetadataInfo
         {
-            Item = item;
+            get => GetItemValue<FileMetadataInfo>();
+            private set => SetItemValue(value);
         }
-        public T Item { get; }
+
+        public ImageMetaData ImageMetaData
+        {
+            get => GetItemValue<ImageMetaData>();
+            set => SetItemValue(value);
+        }
+
+        public FilePathMetadataInfo FilePathMetadataInfo
+        {
+            get => GetItemValue<FilePathMetadataInfo>();
+            set => SetItemValue(value);
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace FSyncCli.Core.Dataflow
 
         private PipelineItem CheckIfFileAlreadyExistsTransform(PipelineItem pipelineItem)
         {
-            var isNewKey = _existingFiles.TryAdd(pipelineItem.Hash, pipelineItem.Item);
+            var isNewKey = _existingFiles.TryAdd(pipelineItem.Hash, pipelineItem.FileMetadataInfo);
 
             if (!isNewKey)
             {
@@ -47,7 +47,7 @@ namespace FSyncCli.Core.Dataflow
             var fileWhichExists = _existingFiles[skippedFileDescriptor.Hash];
 
             _logger.LogWarning(
-                $"File {skippedFileDescriptor.Item.FullPath} has been identified as duplicate of  {fileWhichExists?.FullPath}");
+                $"File {skippedFileDescriptor.FileMetadataInfo.FullPath} has been identified as duplicate of  {fileWhichExists?.FullPath}");
         }
     }
 }
