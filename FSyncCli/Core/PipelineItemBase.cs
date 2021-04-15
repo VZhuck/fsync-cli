@@ -5,21 +5,35 @@ namespace FSyncCli.Core
 {
     public class PipelineItemBase
     {
-        private readonly Dictionary<Guid, object> _metadata = new Dictionary<Guid, object>();
+        private readonly Dictionary<Guid, object> _itemProperties = new Dictionary<Guid, object>();
 
-        public virtual void SetItemValue<T>(T value)
+        public virtual void SetItemProperty<T>(T value)
         {
             var key = typeof(T).GUID;
 
-            _metadata[key] = value;
+            _itemProperties[key] = value;
         }
 
-        public virtual T GetItemValue<T>()
+        public virtual T GetItemProperty<T>()
         {
             var key = typeof(T).GUID;
-            var isAdded = _metadata.TryGetValue(key, out var resValue);
+            var isAdded = _itemProperties.TryGetValue(key, out var resValue);
 
             return isAdded ? (T)resValue : default;
+        }
+    }
+
+    public class PipelineItemBase<T> : PipelineItemBase
+    {
+        public PipelineItemBase(T descriptor)
+        {
+            Descriptor = descriptor;
+        }
+
+        public T Descriptor
+        {
+            get => GetItemProperty<T>();
+            private set => SetItemProperty(value);
         }
     }
 }

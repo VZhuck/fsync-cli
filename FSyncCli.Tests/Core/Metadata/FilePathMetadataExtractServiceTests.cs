@@ -18,11 +18,7 @@ namespace FSyncCli.Tests.Core.Metadata
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void ExtractFilePathMetadata_PathMetadataCaptured(
-            string testPath, string basePath, FilePathMetadataInfo expectedMetadata
-            //ImpreciseDate? expectedFromDate, ImpreciseDate? expectedToDate, 
-            //string expectedCategoryName, string expectedSubPath
-            )
+        public void ExtractFilePathMetadata_PathMetadataCaptured(string testPath, string basePath, FilePathMetadataInfo expectedMetadata)
         {
             // arrange
             var sut = new FilePathMetadataExtractService();
@@ -78,7 +74,32 @@ namespace FSyncCli.Tests.Core.Metadata
                 @"c:/baseDir",
                 null
             };
-        }
 
+            yield return new object[]
+            {
+                @"c:/baseDir/Description/file.jpg",
+                @"c:/baseDir/",
+                new FilePathMetadataInfo
+                {
+                    From = null,
+                    To = null,
+                    CategoryName = @"Description",
+                    CategorySubPath = null
+                }
+            };
+
+            yield return new object[]
+            {
+                @"c:/testFolder/No Date Description/sub_path/file.jpg",
+                @"c:\testFolder\",
+                new FilePathMetadataInfo
+                {
+                    From = null,
+                    To = null,
+                    CategoryName = @"No Date Description",
+                    CategorySubPath = "sub_path"
+                }
+            };
+        }
     }
 }

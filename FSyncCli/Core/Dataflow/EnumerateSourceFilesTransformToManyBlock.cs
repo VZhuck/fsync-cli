@@ -24,7 +24,12 @@ namespace FSyncCli.Core.Dataflow
         {
             return _sourceFileRepoService
                 .GetFileMetadataInfos(directoryInfo)
-                .Select(fileMetadataInfo => fileMetadataInfo.AsPipelineItem());
+                .Select(fileMetadataInfo =>
+                {
+                    var pipelineItem = fileMetadataInfo.AsPipelineItem();
+                    pipelineItem.BaseDirPath = directoryInfo.FullName;
+                    return pipelineItem;
+                });
         }
     }
 }

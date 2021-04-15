@@ -9,7 +9,7 @@ namespace FSyncCli.Domain
         {
         }
 
-        // TODO: Used be tests. Consider to move/remove
+        // TODO: Used by tests. Consider to move/remove
         public FileMetadataInfo(string fullPath)
         {
             FullPath = fullPath;

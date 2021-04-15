@@ -19,13 +19,13 @@ namespace FSyncCli.Core.Dataflow
             Block = new TransformBlock<PipelineItem, PipelineItem>(CalculateAndTransform);
         }
 
-        private PipelineItem CalculateAndTransform(PipelineItem pipelineItem)
+        private PipelineItem CalculateAndTransform(PipelineItem pipelineItemBase)
         {
             using var fileStream = _sourceFileRepoService
-                .GetFilesContentAsStream(pipelineItem.FileMetadataInfo);
-            pipelineItem.Hash = CalculateFileHash(fileStream);
+                .GetFilesContentAsStream(pipelineItemBase.Descriptor);
+            pipelineItemBase.Hash = CalculateFileHash(fileStream);
 
-            return pipelineItem;
+            return pipelineItemBase;
         }
 
         private Guid CalculateFileHash(Stream stream)

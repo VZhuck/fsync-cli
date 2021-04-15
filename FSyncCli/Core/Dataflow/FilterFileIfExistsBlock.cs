@@ -30,16 +30,16 @@ namespace FSyncCli.Core.Dataflow
 
         }
 
-        private PipelineItem CheckIfFileAlreadyExistsTransform(PipelineItem pipelineItem)
+        private PipelineItem CheckIfFileAlreadyExistsTransform(PipelineItem pipelineItemBase)
         {
-            var isNewKey = _existingFiles.TryAdd(pipelineItem.Hash, pipelineItem.FileMetadataInfo);
+            var isNewKey = _existingFiles.TryAdd(pipelineItemBase.Hash, pipelineItemBase.Descriptor);
 
             if (!isNewKey)
             {
-                pipelineItem.IsDuplicate = true;
+                pipelineItemBase.IsDuplicate = true;
             }
 
-            return pipelineItem;
+            return pipelineItemBase;
         }
 
         private void LogFilteredFiles(PipelineItem skippedFileDescriptor)
@@ -47,7 +47,7 @@ namespace FSyncCli.Core.Dataflow
             var fileWhichExists = _existingFiles[skippedFileDescriptor.Hash];
 
             _logger.LogWarning(
-                $"File {skippedFileDescriptor.FileMetadataInfo.FullPath} has been identified as duplicate of  {fileWhichExists?.FullPath}");
+                $"File {skippedFileDescriptor.Descriptor.FullPath} has been identified as duplicate of  {fileWhichExists?.FullPath}");
         }
     }
 }

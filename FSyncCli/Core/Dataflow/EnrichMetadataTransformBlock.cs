@@ -13,7 +13,9 @@ namespace FSyncCli.Core.Dataflow
 
         public IPropagatorBlock<PipelineItem, PipelineItem> Block { get; }
 
-        public EnrichMetadataTransformBlock(IFileRepoService sourceFileRepoService, IImageMetadataProviderService imageMetadataProviderService,
+        public EnrichMetadataTransformBlock(
+            IFileRepoService sourceFileRepoService, 
+            IImageMetadataProviderService imageMetadataProviderService,
             IFilePathMetadataExtractService filePathMetadataExtractService)
         {
             _sourceFileRepoService = sourceFileRepoService;
@@ -23,18 +25,18 @@ namespace FSyncCli.Core.Dataflow
             Block = new TransformBlock<PipelineItem, PipelineItem>(EnrichPipeLineWithMetadata);
         }
 
-        private PipelineItem EnrichPipeLineWithMetadata(PipelineItem pipelineItem)
+        private PipelineItem EnrichPipeLineWithMetadata(PipelineItem pipelineItemBase)
         {
-            if (_imageMetadataProviderService.IsSupportedImageFormat(pipelineItem.FileMetadataInfo.Ext))
+            if (_imageMetadataProviderService.IsSupportedImageFormat(pipelineItemBase.Descriptor.Ext))
             {
-                using var fileStream = _sourceFileRepoService.GetFilesContentAsStream(pipelineItem.FileMetadataInfo);
-                pipelineItem.ImageMetaData = _imageMetadataProviderService.ExtractImageMetadata(fileStream);
-                pipelineItem.FilePathMetadataInfo =
+                using var fileStream = _sourceFileRepoService.GetFilesContentAsStream(pipelineItemBase.Descriptor);
+                pipelineItemBase.ImageMetaData = _imageMetadataProviderService.ExtractImageMetadata(fileStream);
+                pipelineItemBase.FilePathMetadataInfo =
                     _filePathMetadataExtractService.ExtractFilePathMetadata(
-                        pipelineItem.FileMetadataInfo.FullPath);
+                        pipelineItemBase.Descriptor.FullPath, pipelineItemBase.BaseDirPath);
             }
 
-            return pipelineItem;
+            return pipelineItemBase;
         }
     }
 }

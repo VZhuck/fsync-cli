@@ -27,5 +27,19 @@ namespace FSyncCli.Domain
             }
         }
 
+        public override string ToString()
+        {
+            switch (Precision)
+            {
+                case ImpreciseDatePrecision.Year:
+                    return $"{Year:D4}";
+                case ImpreciseDatePrecision.Month:
+                    return $"{Year:D4}.{Month:D2}";
+                case ImpreciseDatePrecision.Day:
+                    return $"{Year:D4}.{Month:D2}.{Day:D2}";
+                default:
+                    return $"{Year:D4}.{Month:D2}.{Day:D2}";
+            }
+        }
     }
 }

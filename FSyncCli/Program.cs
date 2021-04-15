@@ -51,6 +51,7 @@ namespace FSyncCli
                     services.AddScoped<IPipelineContext, PipelineContext>();
                     services.AddScoped<IImageMetadataProviderService, ImageMetadataProviderService>();
                     services.AddScoped<IFilePathMetadataExtractService, FilePathMetadataExtractService>();
+                    services.AddScoped<ITargetPathResolver, TargetPathResolver>();
 
                     // DataFlow Blocks
                     services.AddScoped<EnumerateSourceFilesTransformToManyBlock>();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks.Dataflow;
+using FSyncCli.Core.Metadata;
 using FSyncCli.Infrastructure;
 
 namespace FSyncCli.Core.Dataflow
@@ -9,23 +10,33 @@ namespace FSyncCli.Core.Dataflow
     {
         public ITargetBlock<PipelineItem> Block { get; }
 
-        public CopyFileBlock(IPipelineContext context, IFileRepoService fileRepo)
+        public CopyFileBlock(IPipelineContext context, IFileRepoService fileRepo, ITargetPathResolver targetPathResolver)
         {
             Block = new ActionBlock<PipelineItem>(async pipelineItem =>
             {
-                var destFilePath = Path.Combine(context.TargetDir.FullName, pipelineItem.FileMetadataInfo.Name);
+                var desDirPath = targetPathResolver.ResolveTargetDirPath(
+                    context.TargetDir.FullName, pipelineItem.Descriptor,
+                    pipelineItem.FilePathMetadataInfo, pipelineItem.ImageMetaData);
 
-                if (fileRepo.FileExists(destFilePath))
+                if (!Directory.Exists(desDirPath))
                 {
-                    // Log Warning
-                    var origExt = pipelineItem.FileMetadataInfo.Ext;
-                    var newExt = $"{pipelineItem.Hash.ToString("N")[^12..]}{origExt}";
-
-                    destFilePath = Path.ChangeExtension(destFilePath, newExt);
+                    Directory.CreateDirectory(desDirPath);
                 }
 
-                await using var sourceStream = fileRepo.GetFilesContentAsStream(pipelineItem.FileMetadataInfo);
-                await fileRepo.CreateNewWithContent(destFilePath, sourceStream);
+                var desFilePath = Path.Combine(desDirPath, targetPathResolver.ResolveFileName(
+                    context.TargetDir.FullName, pipelineItem.Descriptor, pipelineItem.ImageMetaData));
+
+                if (fileRepo.FileExists(desFilePath))
+                {
+                    // Log Warning & auto rename the file
+                    var origExt = pipelineItem.Descriptor.Ext;
+                    var newExt = $"{pipelineItem.Hash.ToString("N")[^12..]}{origExt}";
+
+                    desFilePath = Path.ChangeExtension(desFilePath, newExt);
+                }
+
+                await using var sourceStream = fileRepo.GetFilesContentAsStream(pipelineItem.Descriptor);
+                await fileRepo.CreateNewWithContent(desFilePath, sourceStream);
             });
         }
     }

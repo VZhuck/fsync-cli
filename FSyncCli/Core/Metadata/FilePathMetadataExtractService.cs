@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using FSyncCli.Domain;
+using FSyncCli.Utils;
 
 namespace FSyncCli.Core.Metadata
 {
@@ -48,17 +49,20 @@ namespace FSyncCli.Core.Metadata
 
         private FilePathMetadataInfo GetDefaultMetadata(string relativeDirPath)
         {
-            var relativePathAssignments = relativeDirPath?.Split(Path.DirectorySeparatorChar);
+            var relativePathAssignments =
+                relativeDirPath?.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
-            if (relativePathAssignments?.Length <= 0)
+            if (relativePathAssignments == null || relativePathAssignments?.Length <= 0)
             {
                 return null;
             }
 
             return new FilePathMetadataInfo
             {
-                CategoryName = relativePathAssignments?[0],
-                CategorySubPath = relativeDirPath?[1..]
+                CategoryName = relativePathAssignments[0],
+                CategorySubPath = Path
+                    .Combine(relativePathAssignments[1..])
+                    .IfWhiteSpaceThenToNull()
             };
         }
 
