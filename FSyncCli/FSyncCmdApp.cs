@@ -22,26 +22,23 @@ namespace FSyncCli
             _args = fSyncCmdArgs.Args;
             _pipelineBuilder = pipelineBuilder;
 
-            // Create a root command with some options
-            _rootCommand = new RootCommand
-             {
-                 new Option<DirectoryInfo>(
-                     aliases: new [] {"--source-dir", "-s"},
-                     description: "source folder, which will be analyzed"),
-                 new Option<DirectoryInfo>(
-                     aliases: new [] {"--target-dir", "-t"},
-                     description: "folder, which will be used as a target folder to compare with and copy to"),
-                 new Option<bool>(
-                     aliases: new [] {"--dry-run", "-dr"},
-                     description: "when 'true' run simulation (no changes are made)")
-             };
-
-            _rootCommand.Description = "fSync-cli is a small tool, which is targeted to analyze source folder to and copy/sync all its files with target folder, excluding all duplicates.";
-
-            
+            var syncCommand = new Command(
+                "sync",
+                "Copy all files from source dir to target hierarchy, ignoring duplicates")
+            {
+                new Option<DirectoryInfo[]>(
+                    aliases: new [] {"--source-dir", "-s"},
+                    description: "source folder, which will be analyzed"),
+                new Option<DirectoryInfo>(
+                    aliases: new [] {"--target-dir", "-t"},
+                    description: "folder, which will be used as a target folder to compare with and copy to"),
+                new Option<bool>(
+                    aliases: new [] {"--dry-run", "-dr"},
+                    description: "when 'true' run simulation (no changes are made)")
+            };
 
             // Note that the parameters of the handler method are matched according to the names of the options
-            _rootCommand.Handler = CommandHandler.Create<DirectoryInfo, DirectoryInfo>(
+            syncCommand.Handler = CommandHandler.Create<DirectoryInfo[], DirectoryInfo>(
                 async (sourceDir, targetDir) =>
             {
                 _logger.LogInformation($"source folder is: {sourceDir}");
@@ -49,7 +46,7 @@ namespace FSyncCli
 
 
                 var pipeline = _pipelineBuilder
-                    .WithSourceDirs(new[] { sourceDir })
+                    .WithSourceDirs( sourceDir )
                     .WithTargetDir(targetDir)
                     .CreateDefaultPipeline()
                     .Build();
@@ -70,6 +67,12 @@ namespace FSyncCli
                 }
             });
 
+            _rootCommand = new RootCommand
+            {
+                syncCommand
+            };
+
+            _rootCommand.Description = "fSync-cli is a small tool, which is targeted to analyze source folder to and copy/sync all its files with target folder, excluding all duplicates.";
         }
 
         public Task<int> RunAsync(CancellationToken cancellationToken)

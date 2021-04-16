@@ -7,8 +7,8 @@ namespace FSyncCli.Core.Metadata
 {
     public class TargetPathResolver : ITargetPathResolver
     {
-        private const string DdefaultDateStrFormat = "yyyy.MM.dd";
-        private const bool KeepOriginalubPath = false;
+        private const string DefaultDateStrFormat = "yyyy.MM.dd";
+        private const bool KeepOriginalSubPath = false;
         private const bool KeepOriginalCategoryName = true;
 
         // Desired: 2021.12.22 - Description
@@ -23,7 +23,7 @@ namespace FSyncCli.Core.Metadata
 
             catNameStrBuilder.Append(filePathMetadata?.From != null
                     ? filePathMetadata.From.ToString()
-                    : fileDateStamp.ToString(DdefaultDateStrFormat));
+                    : fileDateStamp.ToString(DefaultDateStrFormat));
 
 
             if (filePathMetadata?.To != null)
@@ -41,7 +41,7 @@ namespace FSyncCli.Core.Metadata
             var resolvedFilePath = Path.Combine(targetDir, catNameStrBuilder.ToString());
 
             // Build Category Sub path (turned off be default)
-            if (!string.IsNullOrWhiteSpace(filePathMetadata?.CategorySubPath) && KeepOriginalubPath)
+            if (!string.IsNullOrWhiteSpace(filePathMetadata?.CategorySubPath) && KeepOriginalSubPath)
             {
                 resolvedFilePath = Path.Combine(resolvedFilePath, filePathMetadata.CategorySubPath);
             }
@@ -55,7 +55,7 @@ namespace FSyncCli.Core.Metadata
                                 imgMetaData?.XmpCreatedDate ??
                                 fileInfo.LastWriteTime;
 
-            var targetFileName = $"{fileDateStamp.ToString(DdefaultDateStrFormat)}-{fileInfo.Name}";
+            var targetFileName = $"{fileDateStamp.ToString(DefaultDateStrFormat)}-{fileInfo.Name}";
             return targetFileName;
         }
     }

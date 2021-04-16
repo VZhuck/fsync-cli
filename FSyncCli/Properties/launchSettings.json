@@ -2,7 +2,7 @@
   "profiles": {
     "FSyncCli": {
       "commandName": "Project",
-      "commandLineArgs": "--source-dir \"c:\\!FsyncTest\\source\"  -t \"c:\\!FsyncTest\\target\""
+      "commandLineArgs": "sync --source-dir \"c:\\!FsyncTest\\source\" \"c:\\!FsyncTest\\source1\"  -t \"c:\\!FsyncTest\\target\""
     }
   }
 }
